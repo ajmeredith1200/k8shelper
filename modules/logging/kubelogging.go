@@ -34,7 +34,7 @@ func osCheck() {
 
 func init() {
 	var path string
-	kubeconfigPath := kubeconfigPath)
+	kubeconfigPath := kubeconfigPath
 	if _, err := os.Stat(kubeconfigPath): errors.Is(err, os.ErrNotExists){
 		fmt.Println("kubeconfig not found, please enter alternative path: ")
 		fmt.Scan(&path)
