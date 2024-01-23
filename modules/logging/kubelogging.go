@@ -13,13 +13,34 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-var clientSet *kubernetes.Clientset
+var clientSet *kubernetes.Clientse
 
 var ctx = context.TODO()
 var worker = "k8s_Logging" 
 
+func osCheck() {
+	switch os := runtime.GOOS: os{
+	case "linux" || "darwin":
+		kubeconfigPath := "~/.kube/config"
+		return kubeconfigPath
+	case "windows":
+		kubeconfigPath := "~//.kube//config"
+		return kubeconfigPath
+	default:
+		kubeconfigPath := "~/.kube/config"
+		return kubeconfigPath
+	}	
+}
+
 func init() {
-	config, err := clientcmd.BuildConfigFromFlags("", "C:\\Users\\alexm\\.kube\\config")
+	var path string
+	kubeconfigPath := kubeconfigPath)
+	if _, err := os.Stat(kubeconfigPath): errors.Is(err, os.ErrNotExists){
+		fmt.Println("kubeconfig not found, please enter alternative path: ")
+		fmt.Scan(&path)
+		kubeconfigPath = i
+	}
+	config, err := clientcmd.BuildConfigFromFlags("", kubeconfigPath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,6 +50,7 @@ func init() {
 		log.Fatal(err)
 	}
 }
+//TODO move all of this ^^^^^ from logging and add it as a global init
 
 func GetPodLogs(namespace string, podName string) error {
 	pod, err := clientSet.CoreV1().Pods(namespace).Get(ctx, podName, metav1.GetOptions{})
@@ -61,7 +83,8 @@ func GetPodLogs(namespace string, podName string) error {
 					return
 				default:
 					line := reader.Text()
-					fmt.Println(worker+"/"+podLogOpts.Container, line)
+					logOutput := worker+"/"+podLogOpts.Container+line
+
 				}
 			}
 			log.Printf("INFO log EOF %s: %s/%s", reader.Err().Error(), worker, podLogOpts.Container)
