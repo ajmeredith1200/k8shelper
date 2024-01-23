@@ -16,10 +16,9 @@ import (
 var clientSet *kubernetes.Clientset
 
 var ctx = context.TODO()
-var worker = "k8s_Logging" // Replace with your actual worker name
+var worker = "k8s_Logging" 
 
 func init() {
-	// Initialize the clientSet
 	config, err := clientcmd.BuildConfigFromFlags("", "C:\\Users\\alexm\\.kube\\config")
 	if err != nil {
 		log.Fatal(err)
