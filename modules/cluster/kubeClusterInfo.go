@@ -29,3 +29,6 @@ func GetClusterInfo() (string, error) {
 	clusterInfo := fmt.Sprintf("Cluster: %s, AuthInfo: %s", configClusterInfo.Server, authInfoName)
 	return clusterInfo, nil
 }
+
+//todo: add a function to get the current context
+//todo: add a function to get cluster info
